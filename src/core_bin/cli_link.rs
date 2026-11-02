@@ -86,6 +86,13 @@ mod tests {
         ensure(&home, &exe).unwrap();
         assert_eq!(std::fs::read_link(&link).unwrap(), foreign);
         std::fs::remove_file(&link).unwrap();
+        // The personal build (Herdr-ray.app, see scripts/install-macos) is not an official bundle: starting the
+        // official app must leave a link that points at it alone.
+        let ray = home.join("Applications/Herdr-ray.app/Contents/MacOS/Herdr-ray");
+        symlink(&ray, &link).unwrap();
+        ensure(&home, &exe).unwrap();
+        assert_eq!(std::fs::read_link(&link).unwrap(), ray);
+        std::fs::remove_file(&link).unwrap();
 
         for skipped in [
             "/Volumes/Herdr/Herdr.app/Contents/MacOS/Herdr",
@@ -93,6 +100,8 @@ mod tests {
             "/work/target/debug/Herdr.app/Contents/MacOS/Herdr",
             "/work/target/debug/herdr-app",
             "/Applications/Other.app/Contents/MacOS/Herdr",
+            // ...and the personal build never creates the official link either.
+            "/Applications/Herdr-ray.app/Contents/MacOS/Herdr-ray",
         ] {
             ensure(&home, Path::new(skipped)).unwrap();
             assert!(link.symlink_metadata().is_err(), "{skipped}");

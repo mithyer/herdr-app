@@ -6,6 +6,7 @@ mod commands;
 mod control;
 mod core_bin;
 mod files;
+mod fork;
 mod hc;
 mod keys;
 mod layout;
@@ -96,7 +97,7 @@ fn main() {
         None => {}
         Some("-h" | "--help" | "help") => return print!("{HELP}"),
         Some("--skill") => return print!("{}", include_str!("SKILL.md")),
-        Some("-V" | "--version" | "version") => return println!("herdr-app {}", env!("CARGO_PKG_VERSION")),
+        Some("-V" | "--version" | "version") => return println!("herdr-app {}", fork::version()),
         Some(other) => {
             eprint!("herdr-app: unknown argument {other:?}\n\n{HELP}");
             std::process::exit(2);
