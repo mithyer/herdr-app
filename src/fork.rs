@@ -9,7 +9,7 @@
 
 /// Our own revision on top of the upstream release. Bump it (r1 -> r2) when a
 /// build with new personal changes should look different from the previous one.
-pub const REVISION: &str = "r1";
+pub const REVISION: &str = "r2";
 
 /// The version to show a person: the release number, a dot, then [`REVISION`],
 /// e.g. `0.1.11.r1`.
