@@ -312,8 +312,12 @@ layout's look and a block can differ:
   writing hex when a layout should work light and dark.
 - `themes/<name>.json`: `{ "background", "foreground", "selection",
   "cursor"?, "ansi": [16 colors], "colors"?: {...} }`, all `#rrggbb`; panel
-  colors are derived from these, `colors` overrides them. Herdr ships
-  `atom-one-dark`. The original unedited Atom One Dark and Win98 theme files
+  colors are derived from these, `colors` overrides them. `selection` only
+  tints the background of selected text, which keeps its own color: pick a
+  tint the text stays readable on (a Ghostty theme's `selection-background`
+  may not do, since Ghostty recolors the selected text too). Herdr ships
+  `atom-one-dark` (dark) and `violet-light` (light, after Ghostty's Violet
+  Light). The original unedited Atom One Dark and Win98 theme files
   are upgraded to readable terminal colors; edited theme files are kept.
   A theme named like a layout (`themes/win98.json`) is
   that layout's own: Settings offers it only there.

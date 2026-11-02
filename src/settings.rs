@@ -96,9 +96,14 @@ fn preset(name: &str) -> Option<&'static Palette> {
 /// The shipped theme files (defaults/themes), written to `themes/` when missing.
 const THEMES: &[(&str, &str)] = &[
     ("atom-one-dark", include_str!("../defaults/themes/atom-one-dark.json")),
+    // Ghostty's "Violet Light". Its `selection` is the original violet (#595ab7) mixed
+    // 75% toward white: Ghostty also recolors the selected text, Herdr keeps the text's
+    // own color, so the original violet would hide it.
+    // TEST:src/settings.rs[shipped_theme_files, violet_light_is_light_with_a_light_selection]
+    ("violet-light", include_str!("../defaults/themes/violet-light.json")),
     ("win98", include_str!("../defaults/themes/win98.json")),
 ];
-pub const SHIPPED_THEMES: &[&str] = &["atom-one-dark", "win98"];
+pub const SHIPPED_THEMES: &[&str] = &["atom-one-dark", "violet-light", "win98"];
 
 /// `themes/<name>.json`: a palette, plus `colors` overrides like settings.json's.
 #[derive(Deserialize)]
@@ -250,6 +255,17 @@ fn shipped_theme_files() {
     }
     assert_eq!(found, THEMES.iter().map(|(n, _)| n.to_string()).collect());
     assert_eq!(found, SHIPPED_THEMES.iter().map(|n| n.to_string()).collect());
+}
+
+/// Violet Light is listed under Settings' "Light" (themes are sorted by their
+/// background), and its selection is a light tint: selected text keeps its own
+/// color, so a dark selection would make it unreadable.
+#[test]
+fn violet_light_is_light_with_a_light_selection() {
+    let text = THEMES.iter().find(|(n, _)| *n == "violet-light").unwrap().1;
+    let (p, _) = parse_theme_file("violet-light", text).unwrap();
+    assert!(is_light(p.background));
+    assert!(is_light(p.selection));
 }
 
 /// Whether `name` is a theme that can be shown.
