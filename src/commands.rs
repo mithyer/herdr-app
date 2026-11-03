@@ -62,7 +62,7 @@ pub const COMMANDS: &[Command] = &[
     cmd("pane.swap", &[req("direction")], "Swap the focused pane with its neighbor in a direction."),
     cmd("terminal.peek", &[req("terminal")], "Peek at a running terminal over the tab, with keep-as-tab and close controls."),
     cmd("terminal.show", &[opt("terminal"), opt("pane")], "Show a terminal in a pane for now, in place of its own (no terminal: back)."),
-    cmd("terminal.copy", &[], "Copy the focused terminal's selection."),
+    cmd("terminal.copy", &[], "Copy the focused terminal's selection. With nothing selected, that key goes to the program."),
     cmd("terminal.paste", &[], "Paste into the focused terminal (copied files as if dropped; an image alone as terminal.paste_image pastes it)."),
     cmd("terminal.find", &[opt("text")], "Find text in the focused terminal and its scrollback: opens its find bar (with text: finds that). ASCII letters match in any case, the rest exactly."),
     cmd("terminal.find_next", &[], "Select the focused terminal's next match up, toward older output, scrolling to it (its find bar must be open)."),
@@ -84,7 +84,7 @@ pub const COMMANDS: &[Command] = &[
     cmd("mod.open", &[req("name")], "Toggle a mod as the overlay its mod.json describes; calling again closes it."),
     cmd("overlay.close", &[opt("id")], "Close an overlay (default: the top dialog or popup)."),
     // The app.
-    cmd("app.help", &[], "Show the keys."),
+    cmd("app.help", &[], "Toggle the keys dialog."),
     cmd("app.welcome", &[], "Show the welcome again."),
     cmd("app.whats_new", &[], "Show what this release brought (it opens once by itself after an update)."),
     cmd("app.feedback", &[opt("message"), opt("from")], "Draft feedback for the person to review and send (from: person or agent)."),
